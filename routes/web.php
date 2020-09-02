@@ -17,6 +17,8 @@ Route::post('post/save', 'PostController@savePost');
 //update
 Route::get('post/edit/{post:slug}', 'PostController@edit');
 Route::patch('post/edit/{post:slug}', 'PostController@editPost');
+//delete
+Route::delete('post/delete/{post:slug}', 'PostController@deletePost');
 //detail
 Route::get('post/{slug}', 'PostController@show'); //contoh menggunakan wildcard routing
 Route::get('showUsingModelBinding/{post:slug}', 'PostController@showUsingModelBinding'); //contoh menggunakan wildcard routing dengan model binding

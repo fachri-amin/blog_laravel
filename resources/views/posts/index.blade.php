@@ -19,7 +19,14 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             <p class="text-muted">Published on {{ $post->created_at->diffForHumans() }}</p>
-                            <a href="/post/edit/{{ $post->slug }}" class="btn btn-warning">Edit</a>
+                            <div>
+                                <a href="/post/edit/{{ $post->slug }}" class="btn btn-warning">Edit</a>
+                                <form class="d-inline" action="/post/delete/{{ $post->slug }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" onclick="return confirm('Ingin mengapus postingan ini?')" href="" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -30,4 +37,5 @@
             </div>
         </div>
     </div>
+
 @endsection
