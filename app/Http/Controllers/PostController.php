@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use \App\Post; // ini agar class post bisa di gunakan, dengan memanggil namesapce nya
 use \Illuminate\Http\Request;
+use \App\Http\Requests\RequestPost;
 
 class PostController extends Controller
 {
@@ -33,13 +34,10 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function savePost(){
+    public function savePost(RequestPost $request){
 
         //membuat validasi
-        $attr = request()->validate([
-            'title'=>'required|min:5', // membuat field title menjadi required dan minimal 5 character
-            'body'=>'required'
-        ]);
+        $attr = $request->all();
 
         //assign title ke slug
         $attr['slug'] = \Str::slug(request('title'));
@@ -55,15 +53,18 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function editPost(Post $post){
+    public function editPost(RequestPost $request, Post $post){
 
         //membuat validasi
-        $attr = request()->validate([
-            'title'=>'required|min:5', // membuat field title menjadi required dan minimal 5 character
-            'body'=>'required'
-        ]);
+        // $attr = request()->validate([
+        //     'title'=>'required|min:5', // membuat field title menjadi required dan minimal 5 character
+        //     'body'=>'required'
+        // ]); //! ini dibuat dengan manual tanpa php artisan make:request
+
+        $attr = $request->all(); // validasi dengan class RequestPost
 
         //assign title ke slug
+        
         $attr['slug'] = \Str::slug(request('title'));
 
         $post->update($attr);
