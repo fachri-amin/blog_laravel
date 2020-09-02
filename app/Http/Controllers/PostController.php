@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \App\Post; // ini agar class post bisa di gunakan, dengan memanggil namesapce nya
 use \Illuminate\Http\Request;
 use \App\Http\Requests\RequestPost;
+use \App\Category;
 
 class PostController extends Controller
 {
@@ -31,7 +32,10 @@ class PostController extends Controller
     }
 
     public function create(){
-        return view('posts.create');
+        $context = [
+            'categories'=> Category::all(),
+        ];
+        return view('posts.create', $context);
     }
 
     public function savePost(RequestPost $request){

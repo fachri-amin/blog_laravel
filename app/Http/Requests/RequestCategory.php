@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RequestPost extends FormRequest
+class RequestCategory extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class RequestPost extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|min:5', // membuat field title menjadi required dan minimal 5 character
-            'body'=>'required',
-            'category_id'=>'required'
+            'name'=>'required',
         ];
     }
 }

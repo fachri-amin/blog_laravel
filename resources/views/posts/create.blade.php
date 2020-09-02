@@ -26,6 +26,15 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Example select</label>
+                        <select name="category_id" class="form-control" id="exampleFormControlSelect1">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                            
+                        </select>
+                    </div>
                     <button class="btn btn-primary">Add new post</button>
                 </form>
             </div>

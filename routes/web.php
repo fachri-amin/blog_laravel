@@ -22,3 +22,15 @@ Route::delete('post/delete/{post:slug}', 'PostController@deletePost');
 //detail
 Route::get('post/{slug}', 'PostController@show'); //contoh menggunakan wildcard routing
 Route::get('showUsingModelBinding/{post:slug}', 'PostController@showUsingModelBinding'); //contoh menggunakan wildcard routing dengan model binding
+
+
+//CATEGORY
+Route::get('category/', 'CategoryController@index');
+//create
+Route::get('category/create', 'CategoryController@create');
+Route::post('category/save', 'CategoryController@saveCategory');
+//update
+Route::get('category/edit/{category:slug}', 'CategoryController@edit');
+Route::patch('category/edit/{category:slug}', 'CategoryController@editCategory');
+//delete
+Route::delete('category/delete/{category:slug}', 'CategoryController@deleteCategory');
