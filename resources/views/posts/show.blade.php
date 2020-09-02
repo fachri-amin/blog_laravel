@@ -1,7 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="container text-centet">
-    <h1>Ini adalah detail post dari {{ $slug }}</h1>
+    <div class="container text-center">
+    <h1>{{ $post->title }}</h1>
+    <p>{{ $post->body }}</p>
     </div>
 @endsection
