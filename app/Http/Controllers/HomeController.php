@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * Create a new controller instance.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return void
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
-
-    public function __invoke()
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
     {
-        // jika ada invoke method di controller maka controller itu hanya bisa menampilkan 1 view, yaitu view yang ada di mehtod invoke ini
-        //
-
-        $name = request('name');
-        $context = [
-            'name'=>$name
-        ];
-        return view('home', $context);
+        return redirect(route('post'));
     }
 }

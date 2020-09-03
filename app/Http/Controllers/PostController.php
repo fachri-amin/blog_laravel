@@ -11,20 +11,15 @@ class PostController extends Controller
 {
 
     public function index(){
-        $context = [
-            'posts'=>Post::latest()->paginate(5),
-        ];
-        return view('posts.index', $context);
+        $posts = Post::latest()->paginate(5);
+        $all_category = Category::all();
+        return view('posts.index', compact('posts', 'all_category'));
     }
 
     public function show($slug){ //samakan nama parameter yang mengisi method ini dengan wildcard yang ada di routing
         $post = Post::where('slug', $slug)->firstOrFail();// firstOrFail ini digunakan agar apabila data yang di cari tidak ada maka akan redirect ke 404 page
 
-        $context = [
-            'slug'=>$slug,
-            'post'=>$post
-        ];
-        return view('posts.show', $context);
+        return view('posts.show', compact('slug', 'post'));
     }
 
     public function showUsingModelBinding(Post $post){
@@ -32,10 +27,8 @@ class PostController extends Controller
     }
 
     public function create(){
-        $context = [
-            'categories'=> Category::all(),
-        ];
-        return view('posts.create', $context);
+        $categories = Category::all();
+        return view('posts.create', compact('categories'));
     }
 
     public function savePost(RequestPost $request){
@@ -46,15 +39,16 @@ class PostController extends Controller
         //assign title ke slug
         $attr['slug'] = \Str::slug(request('title'));
 
-        Post::create($attr);
+        $post = auth()->user()->posts()->create($attr);
 
         session()->flash('success', 'The post new was created');
         
-        return redirect($to = '/');
+        return redirect($to = route('post'));
     }
 
     public function edit(Post $post){
-        return view('posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     public function editPost(RequestPost $request, Post $post){
@@ -75,7 +69,7 @@ class PostController extends Controller
 
         session()->flash('success', 'The post new was updated');
         
-        return redirect($to = '/');
+        return redirect($to = route('post'));
     }
 
     public function deletePost(Post $post){
@@ -83,6 +77,6 @@ class PostController extends Controller
 
         session()->flash('success', 'The post was delete');
 
-        return redirect($to = '/');
+        return redirect($to = route('post'));
     }
 }

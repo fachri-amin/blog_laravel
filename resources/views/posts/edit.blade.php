@@ -27,6 +27,19 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Example select</label>
+                        <select name="category_id" class="form-control" id="exampleFormControlSelect1">
+                            @foreach ($categories as $category)
+                                <option {{ $post->category->category_id == $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach    
+                        </select>
+                        @error('category_id')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <button class="btn btn-primary">edit post</button>
                 </form>
             </div>

@@ -32,8 +32,12 @@
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
-                            
                         </select>
+                        @error('category_id')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <button class="btn btn-primary">Add new post</button>
                 </form>

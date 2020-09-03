@@ -15,6 +15,8 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->string('thumbnail')->nullable();
             $table->string('title'); //parameter kedua adalah panjang data yang dapat direkam
             $table->text('body');
             $table->string('slug');

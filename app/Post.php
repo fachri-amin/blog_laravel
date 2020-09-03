@@ -20,4 +20,9 @@ class Post extends Model // nama model ini adalah bentuk singular dari nama tabl
         //membuat relasi ke table categories
         return $this->belongsTo(Category::class);
     }
+
+    public function author(){
+        //membuat relasi ke table categories
+        return $this->belongsTo(User::class, 'user_id'); //karena nama method nya beda dengan nama field foreign key nya maka nama field foreign key nya harus di defenisikan di parameter kedua
+    }
 }

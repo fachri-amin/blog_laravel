@@ -9,10 +9,14 @@ use App\Http\Requests\RequestCategory;
 class CategoryController extends Controller
 {
     public function index(){
-        $context = [
-            'categories'=>Category::latest()->paginate(5),
-        ];
-        return view('categories.index', $context);
+        $categories = Category::latest()->paginate(5);
+        return view('categories.index', compact('categories'));
+    }
+
+    public function showPostPerCategory(Category $category){
+        $posts = $category->posts()->latest()->paginate(5);
+        $all_category = Category::all();
+        return view('posts.index', compact('posts', 'category', 'all_category'));
     }
 
     public function create(){
@@ -31,7 +35,7 @@ class CategoryController extends Controller
 
         session()->flash('success', 'The Category new was created');
         
-        return redirect($to = '/category');
+        return redirect($to = route('category'));
     }
 
     public function edit(Category $category){
@@ -48,7 +52,7 @@ class CategoryController extends Controller
 
         session()->flash('success', 'The Category new was updated');
         
-        return redirect($to = '/category');
+        return redirect($to = route('category'));
     }
 
     public function deleteCategory(Category $category){
@@ -56,6 +60,6 @@ class CategoryController extends Controller
 
         session()->flash('success', 'The Category was delete');
 
-        return redirect($to = '/category');
+        return redirect($to = route('category'));
     }
 }
