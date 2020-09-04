@@ -28,6 +28,9 @@
                             @csrf
                         </form>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Hi, {{ Auth::user()->name }}</a>
+                    </li>
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

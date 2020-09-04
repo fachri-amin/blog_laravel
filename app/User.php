@@ -41,4 +41,8 @@ class User extends Authenticatable
         //membuat relasi ke table posts
         return $this->hasMany(Post::class);
     }
+
+    public function isAdmin(){
+        return $this->username == 'fachri';
+    }
 }

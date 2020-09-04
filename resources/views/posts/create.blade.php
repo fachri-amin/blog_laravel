@@ -6,8 +6,17 @@
         <hr>
         <div class="row">
             <div class="col-md-8">
-                <form action="/post/save" method="post">
+                <form action="/post/save" method="post" enctype="multipart/form-data">
                     @csrf
+                    <div class="form-group">
+                        <label for="thumbnail">Thumbnail</label>
+                        <input class="form-control" type="file" name="thumbnail" id="thumbnail">
+                        @error('thumbnail')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="password">Title</label>
                         <input name="title" type="text" class="form-control" id="password">

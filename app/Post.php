@@ -8,7 +8,7 @@ class Post extends Model // nama model ini adalah bentuk singular dari nama tabl
 {
     // protected $table = 'nama_table_beda_dengan_bentuk_plural_dari_nama_model' //!ini yang dilakukan apabila ingin menggunakan nama yang berbeda
 
-    protected $fillable = ['title', 'body', 'slug', 'category_id']; // fillabel ini adalha variable yang akan menjadi referensi field mana saja yang dapat di isi, semua field yang tidak ada di fillable tidak akan bisa diisi
+    protected $fillable = ['title', 'body', 'slug', 'category_id', 'thumbnail']; // fillabel ini adalha variable yang akan menjadi referensi field mana saja yang dapat di isi, semua field yang tidak ada di fillable tidak akan bisa diisi
 
     public function scopeLatestOne(){ 
         // method ini bisa dipanggil di 'php artisan tinker' dengan command 'Post::latestOne()'
@@ -24,5 +24,9 @@ class Post extends Model // nama model ini adalah bentuk singular dari nama tabl
     public function author(){
         //membuat relasi ke table categories
         return $this->belongsTo(User::class, 'user_id'); //karena nama method nya beda dengan nama field foreign key nya maka nama field foreign key nya harus di defenisikan di parameter kedua
+    }
+
+    public function showThumbnail(){
+        return "/storage/". $this->thumbnail;
     }
 }

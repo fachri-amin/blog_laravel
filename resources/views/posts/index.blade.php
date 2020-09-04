@@ -8,19 +8,20 @@
             <div class="col-md-8">
                 @foreach ($posts as $post)
                     <div class="card mb-5">
-                        <div class="card-header">
-                            <h3>{{ $post->title }}</h3>
-                            <p class="text-muted d-inline"> By: {{ $post->author->name }}</p> &minus; <a href="/category/{{ $post->category->slug }}" class="text-muted d-inline">{{ $post->category->name }}</a>
-                        </div>
+                        <img style="height: 400px; object-fit: cover; object-position: center;" src="{{ asset($post->showThumbnail()) }}" alt="">
                         <div class="card-body">
-                            <div class="">
+                            <div class="card-title">
+                                <h3><a class="text-dark" href="post/{{ $post->slug }}">{{ $post->title }}</a></h3>
+                                <p class="text-muted d-inline"> By: {{ $post->author->name }}</p> &minus; <a href="/category/{{ $post->category->slug }}" class="text-muted d-inline">{{ $post->category->name }}</a>
+                            </div>
+                            <div class="card-text">
                                 <p>{{ Str::limit($post->body, 300) }}</p>
                             </div>
                             <a href="post/{{ $post->slug }}">Read more</a>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             <p class="text-muted">Published on {{ $post->created_at->diffForHumans() }}</p>
-                            @auth
+                            @can('update', $post)
                                 <div>
                                     <a href="/post/edit/{{ $post->slug }}" class="btn btn-warning">Edit</a>
                                     <form class="d-inline" action="/post/delete/{{ $post->slug }}" method="post">
@@ -29,7 +30,7 @@
                                         <button type="submit" onclick="return confirm('Ingin mengapus postingan ini?')" href="" class="btn btn-danger">Delete</button>
                                     </form>    
                                 </div>
-                            @endauth
+                            @endcan
                         </div>
                     </div>
                 @endforeach

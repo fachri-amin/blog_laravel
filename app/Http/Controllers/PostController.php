@@ -36,8 +36,16 @@ class PostController extends Controller
         //membuat validasi
         $attr = $request->all();
 
+        $request->validate([
+            'thumbnail'=>'image|mimes:jpeg,jpg,png|max:2048',
+        ]);
+
         //assign title ke slug
         $attr['slug'] = \Str::slug(request('title'));
+
+        $thumbnail = request()->file('thumbnail') ? request()-> file('thumbnail')->store('images/posts') : null;
+
+        $attr['thumbnail'] = $thumbnail;
 
         $post = auth()->user()->posts()->create($attr);
 
@@ -47,23 +55,39 @@ class PostController extends Controller
     }
 
     public function edit(Post $post){
+        $this->authorize('update', $post);
+
         $categories = Category::all();
         return view('posts.edit', compact('post', 'categories'));
     }
 
     public function editPost(RequestPost $request, Post $post){
 
+        //authorization
+        $this->authorize('update', $post);
+
+        $request->validate([
+            'thumbnail'=>'image|mimes:jpeg,jpg,png|max:2048',
+        ]);
+        
         //membuat validasi
         // $attr = request()->validate([
-        //     'title'=>'required|min:5', // membuat field title menjadi required dan minimal 5 character
-        //     'body'=>'required'
-        // ]); //! ini dibuat dengan manual tanpa php artisan make:request
+            //     'title'=>'required|min:5', // membuat field title menjadi required dan minimal 5 character
+            //     'body'=>'required'
+            // ]); //! ini dibuat dengan manual tanpa php artisan make:request
+            
+        if(request()->file('thumbnail')){ //kalau thumbnail diganti maka thumbnail lama dihapus
+            \Storage::delete($post->thumbnail);
+            $thumbnail = request()-> file('thumbnail')->store('images/posts');
+        }
+        else{
+            $thumbnail = $post->thumbnail;
+        }
 
         $attr = $request->all(); // validasi dengan class RequestPost
-
-        //assign title ke slug
-        
         $attr['slug'] = \Str::slug(request('title'));
+
+        $attr['thumbnail'] = $thumbnail;
 
         $post->update($attr);
 
@@ -73,6 +97,11 @@ class PostController extends Controller
     }
 
     public function deletePost(Post $post){
+
+        $this->authorize('delete', $post);
+
+        \Storage::delete($post->thumbnail);
+
         $post->delete();
 
         session()->flash('success', 'The post was delete');
