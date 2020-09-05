@@ -38,15 +38,27 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/posts/" class="nav-link">
+                <a href="{{ route('post') }}" class="nav-link">
                   <i class="far fa-newspaper nav-icon"></i>
                   <p>Posts</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/categories/" class="nav-link">
+                <a href="{{ route('category') }}" class="nav-link">
                   <i class="fas fa-sitemap nav-icon"></i>
                   <p>Categories</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('comment') }}" class="nav-link">
+                  <i class="fas fa-sitemap nav-icon"></i>
+                  <p>Comments</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('rating') }}" class="nav-link">
+                  <i class="fas fa-sitemap nav-icon"></i>
+                  <p>Ratings</p>
                 </a>
               </li>
           </li>

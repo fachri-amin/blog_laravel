@@ -20,7 +20,10 @@
                             <a href="post/{{ $post->slug }}">Read more</a>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
-                            <p class="text-muted">Published on {{ $post->created_at->diffForHumans() }}</p>
+                            <div class="p-0">
+                                <p class="text-muted">Published on {{ $post->created_at->diffForHumans() }}</p>
+                                <p class="text-muted mb-0">Ratings : {{ $post->getRatingPost() }}</p>
+                            </div>
                             @can('update', $post)
                                 <div>
                                     <a href="/post/edit/{{ $post->slug }}" class="btn btn-warning">Edit</a>

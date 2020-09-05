@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index(){
         $categories = Category::latest()->paginate(5);
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     public function showPostPerCategory(Category $category){
@@ -20,7 +20,7 @@ class CategoryController extends Controller
     }
 
     public function create(){
-        return view('categories.create');
+        return view('admin.categories.create');
     }
 
     public function saveCategory(RequestCategory $request){
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     }
 
     public function edit(Category $category){
-        return view('categories.edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     public function editCategory(RequestCategory $request, Category $category){

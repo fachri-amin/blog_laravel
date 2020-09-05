@@ -26,6 +26,30 @@ class Post extends Model // nama model ini adalah bentuk singular dari nama tabl
         return $this->belongsTo(User::class, 'user_id'); //karena nama method nya beda dengan nama field foreign key nya maka nama field foreign key nya harus di defenisikan di parameter kedua
     }
 
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function ratings(){
+        return $this->hasMany(Rating::class);
+    }
+
+    public function getRatingPost(){
+
+        //!still not working corectly
+        $ratings = $this->ratings->all();
+
+        $result = 0;
+        foreach($ratings as $rating){
+            $result += $rating->rate;
+        }
+
+        $all_rating = count($ratings);
+
+
+        return $result == 0 ? '-' : $result/$all_rating;
+    }
+
     public function showThumbnail(){
         return "/storage/". $this->thumbnail;
     }

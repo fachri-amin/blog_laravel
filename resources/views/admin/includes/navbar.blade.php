@@ -11,6 +11,8 @@
     </ul>
 
     <!-- Right navbar links -->
-    
-  </nav>
+    <div class="m-auto">
+      @include('flasher.alert')
+    </div>
+</nav>
   <!-- /.navbar -->

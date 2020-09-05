@@ -44,6 +44,25 @@ Route::get('category/', 'CategoryController@index')->name('category');
 //showPostPerCategory
 Route::get('category/{category:slug}', 'CategoryController@showPostPerCategory')->name('category.showPostPerCategory');
 
+//Comment
+Route::prefix('comment')->middleware('auth')->group(function(){
+    Route::get('', 'CommentController@index')->name('comment');
+    Route::get('edit/{comment}', 'CommentController@edit')->name('comment.edit');
+    Route::post('editComment/{comment}', 'CommentController@editComment')->name('comment.editComment');
+    Route::post('delete/{comment}', 'CommentController@deleteRating')->name('comment.delete');
+});
+
+//Rating
+Route::prefix('rating')->middleware('auth')->group(function(){
+    Route::get('', 'RatingController@index')->name('rating');
+    Route::get('edit/{rating}', 'RatingController@edit')->name('rating.edit');
+    Route::post('editRating/{rating}', 'RatingController@editRating')->name('rating.editRating');
+    Route::post('delete/{rating}', 'RatingController@deleteRating')->name('rating.delete');
+});
+
+//Admin
+Route::get('admin')->middleware('auth')->name('admin');
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
