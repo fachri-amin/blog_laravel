@@ -6,7 +6,7 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1>Comment Management</h1>
+        <h1>Users Management</h1>
         </div>
         <div class="col-sm-6">
         <form class="form-inline float-right" action="" method="get">
@@ -39,52 +39,50 @@
                 <thead>
                     <tr>
                         <th style="width: 1%">
-                            id
+                            Id
                         </th>
                         <th style="width: 20%">
-                            Comment
-                        </th>
-                        <th style="width: 30%">
-                            From
-                        </th>
-                        <th>
-                            To
+                            Username
                         </th>
                         <th style="width: 20%">
-                        Action
+                            Name
+                        </th>
+                        <th style="width: 10%">
+                            Email
+                        </th>
+                        <th style="width: 20%">
+                            Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($comments as $comment)
-                    @can('commentOwner', $comment)
+                @foreach($users as $user)
+                    @can('admin', Auth::user())
                         <tr>
                             <td>
-                                {{ $comment->id }}
+                                {{ $user->id }}
                             </td>
                             <td>
-                                <a>
-                                    {{ $comment->comment }}
-                                </a>
+                                {{ $user->username }}
                                 <br/>
                                 <small>
-                                    {{ $comment->created_at }}
+                                    {{ $post->created_at }}
                                 </small>
                             </td>
                             <td>
-                                {{ $comment->user->username }}
+                                {{ $user->name }}
                             </td>
                             <td>
-                                <a href="{{ route('post.detail', $comment->post->slug) }}">{{ $comment->post->title }} - {{ $comment->post->author->name }}</a>
+                                {{ $user->email }}
                             </td>
                             <td class="project-actions text-left">
-                            <a class="btn btn-info btn-sm d-inline-block" href="{{ route('comment.edit', $comment->id) }}">
+                            <a class="btn btn-info btn-sm d-inline-block" href="{{-- {{ route('post.edit', $post->slug) }}--}}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit
                                 </a>
                                 <div class="d-inline-block">
-                                    <form action="{{ route('comment.delete', $comment->id) }}" method="POST">
+                                    <form action="{{-- {{ route('post.delete', $post->slug) }} --}}" method="POST">
                                         @csrf
                                         <button onClick="javascript: return confirm('Please confirm deletion');" class="btn btn-danger btn-sm" href="">
                                             <i class="fas fa-trash">
@@ -100,11 +98,12 @@
                 </tbody>
             </table>
         </div>
-    <!-- /.card-body -->
+        <!-- /.card-body -->
     </div>
-    <div class="row">
-        <div class="float-right">
-            {{ $comments->links() }}
+    <div class="justify-content-between row">
+        {{-- <a class="btn btn-primary d-inline-block" href="{{-- {{ route('post.create') }} --}}">New Post</a> --}}
+        <div class="d-inline-block">
+            {{ $users->links() }}
         </div>
     </div>
 </section>

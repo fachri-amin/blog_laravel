@@ -102,5 +102,8 @@
         </div>
     <!-- /.card-body -->
     </div>
+    <div class="float-right">
+        {{ $ratings->links() }}
+    </div>
 </section>
 @endsection

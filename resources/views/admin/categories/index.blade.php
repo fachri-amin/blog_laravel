@@ -88,6 +88,11 @@
         </div>
         <!-- /.card-body -->
     </div>
-    <a href="{{ route('category.create') }}" class="btn btn-primary">New Category</a>
+    <div class="justify-content-between row">
+        <a class="btn btn-primary d-inline-block" href="{{ route('category.create') }}">New Category</a>
+        <div class="d-inline-block">
+            {{ $categories->links() }}
+        </div>
+    </div>
 </section>
 @endsection

@@ -31,12 +31,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/users/" class="nav-link">
-                  <i class="fas fa-users nav-icon"></i>
-                  <p>Users</p>
-                </a>
-              </li>
+              @can('admin', Auth::user())
+                <li class="nav-item">
+                  <a href="pages/users/" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <p>Users</p>
+                  </a>
+                </li>
+              @endcan
               <li class="nav-item">
                 <a href="{{ route('post.admin') }}" class="nav-link">
                   <i class="far fa-newspaper nav-icon"></i>

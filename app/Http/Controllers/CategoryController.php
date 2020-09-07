@@ -50,7 +50,7 @@ class CategoryController extends Controller
 
         $category->update($attr);
 
-        session()->flash('success', 'The Category new was updated');
+        session()->flash('success', 'The Category was updated');
         
         return redirect($to = route('category'));
     }

@@ -1,26 +1,21 @@
-@extends('layouts.base', ['title' => 'Edit category'])
+@extends('admin.includes.base_admin')
 
 @section('content')
-    <div class="container">
-        <h1 class="mb-4">Edit category</h1>
-        <hr>
-        <div class="row">
-            <div class="col-md-8">
-                <form action="/category/edit/{{ $category->slug }}" method="post">
-                    @method('patch')
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input name="name" type="text" class="form-control" id="name" value="{{ old('name') ?? $category->name }}">
-                        @error('title')
-                            <div class="text-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
+    <div class="card-body">
+        <form action="{{ route('category.editCategory', $category->slug) }}" method="POST">
+            @csrf
+            @method('patch')
+            <div class="form-group col-sm-4">
+                <label for="name">Category</label>
+                <input class="form-control" type="text" name="name" id="name" value="{{ $category->name }}">
+                @error('name')
+                    <div class="text-danger">
+                        {{ $message }}
                     </div>
-                    <button class="btn btn-primary">Edit category</button>
-                </form>
+                @enderror
             </div>
-        </div>
+            <a href="#" class="btn btn-secondary">Cancel</a>
+            <input name="submit" type="submit" value="Edit" class="btn btn-success">
+        </form>
     </div>
 @endsection

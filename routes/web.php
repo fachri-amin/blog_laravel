@@ -4,6 +4,10 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+//USER-AUTH
+Route::prefix(('user'))->middleware('auth')->group(function(){
+    Route::get('', 'UserController@index')->name('user');
+});
 
 //POST-AUTH
 Route::prefix('post')->middleware('auth')->group(function(){
@@ -27,6 +31,7 @@ Route::get('showUsingModelBinding/{post:slug}', 'PostController@showUsingModelBi
 
 //CATEGORY-AUTH
 Route::prefix('category')->middleware('auth')->group(function(){
+    Route::get('', 'CategoryController@index')->name('category');
     //create
     Route::get('create', 'CategoryController@create')->name('category.create');
     Route::post('save', 'CategoryController@saveCategory')->name('category.save');
@@ -38,7 +43,6 @@ Route::prefix('category')->middleware('auth')->group(function(){
 });
 
 //CATEGORY
-Route::get('category/', 'CategoryController@index')->name('category');
 //showPostPerCategory
 Route::get('category/{category:slug}', 'CategoryController@showPostPerCategory')->name('category.showPostPerCategory');
 

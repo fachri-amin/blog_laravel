@@ -108,6 +108,11 @@
         </div>
         <!-- /.card-body -->
     </div>
-    <a class="btn btn-primary" href="{{ route('post.create') }}">New Post</a>
+    <div class="justify-content-between row">
+        <a class="btn btn-primary d-inline-block" href="{{ route('post.create') }}">New Post</a>
+        <div class="d-inline-block">
+            {{ $posts->links() }}
+        </div>
+    </div>
 </section>
 @endsection
