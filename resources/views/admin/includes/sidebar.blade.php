@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
       <img src="{{ asset('template/AdminLTE/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Admin Blog Post</span>
+      <span class="brand-text font-weight-light">Admin Blog Laravel</span>
     </a>
 
     <!-- Sidebar -->
@@ -14,7 +14,7 @@
           <img src="{{ asset('template/AdminLTE/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          {{-- <a href="#" class="d-block">{{ Auth::user()->name }}</a> --}}
+          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
             <ul class="nav nav-treeview">
               @can('admin', Auth::user())
                 <li class="nav-item">
-                  <a href="pages/users/" class="nav-link">
+                  <a href="{{ route('user') }}" class="nav-link">
                     <i class="fas fa-users nav-icon"></i>
                     <p>Users</p>
                   </a>

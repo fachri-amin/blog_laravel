@@ -66,7 +66,7 @@
                                 {{ $user->username }}
                                 <br/>
                                 <small>
-                                    {{ $post->created_at }}
+                                    {{ $user->created_at }}
                                 </small>
                             </td>
                             <td>
@@ -101,7 +101,7 @@
         <!-- /.card-body -->
     </div>
     <div class="justify-content-between row">
-        {{-- <a class="btn btn-primary d-inline-block" href="{{-- {{ route('post.create') }} --}}">New Post</a> --}}
+        {{-- <a class="btn btn-primary d-inline-block" href="{{ route('post.create') }}">New Post</a> --}}
         <div class="d-inline-block">
             {{ $users->links() }}
         </div>
