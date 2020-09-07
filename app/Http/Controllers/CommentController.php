@@ -14,6 +14,18 @@ class CommentController extends Controller
         return view('admin.comments.index', compact('comments'));
     }
 
+    public function saveComment(RequestComment $request, Post $post){
+
+        //membuat validasi
+        $attr = $request->all();
+        $attr['post_id'] = $post->id;
+        $comments = auth()->user()->comments()->create($attr);
+
+        session()->flash('success', 'You post a new comment to this page');
+        
+        return redirect($to = route('post.detail', $post->slug));
+    }
+
     public function edit(Comment $comment){
         return view('admin.comments.edit', compact('comment'));
     }

@@ -6,7 +6,7 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1>Rating Management</h1>
+        <h1>Post Management</h1>
         </div>
         <div class="col-sm-6">
         <form class="form-inline float-right" action="" method="get">
@@ -39,52 +39,58 @@
                 <thead>
                     <tr>
                         <th style="width: 1%">
-                            id
+                            Id
                         </th>
                         <th style="width: 20%">
-                            Rate
-                        </th>
-                        <th style="width: 30%">
-                            From
-                        </th>
-                        <th>
-                            To
+                            Title
                         </th>
                         <th style="width: 20%">
-                        Action
+                            Written by
+                        </th>
+                        <th style="width: 10%">
+                            Rating
+                        </th>
+                        <th style="width: 10%">
+                            Category
+                        </th>
+                        <th style="width: 20%">
+                            Action
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($ratings as $rating)
-                    @can('ratingOwner', $rating)    
+                @foreach($posts as $post)
+                    @can('update', $post)
                         <tr>
                             <td>
-                                {{ $rating->id }}
+                                {{ $post->id }}
                             </td>
                             <td>
-                                <a>
-                                    {{ $rating->rate }}
+                                <a href="{{ route('post.detail', $post->slug) }}">
+                                    {{ $post->title }}
                                 </a>
                                 <br/>
                                 <small>
-                                    {{ $rating->created_at }}
+                                    {{ $post->created_at }}
                                 </small>
                             </td>
                             <td>
-                                {{ $rating->user->username }}
+                                {{ $post->author->username }}
                             </td>
                             <td>
-                                <a href="{{ route('post.detail', $rating->post->slug) }}">{{ $rating->post->title }} - {{ $rating->post->author->name }}</a>
+                                {{ $post->getRatingPost() }}
+                            </td>
+                            <td>
+                                {{ $post->category->name }}
                             </td>
                             <td class="project-actions text-left">
-                                <a class="btn btn-info btn-sm d-inline-block" href="{{ route('rating.edit', $rating->id) }}">
+                            <a class="btn btn-info btn-sm d-inline-block" href="{{ route('post.edit', $post->slug) }}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit
                                 </a>
                                 <div class="d-inline-block">
-                                    <form action="{{ route('rating.delete', $rating->id) }}" method="POST">
+                                    <form action="{{ route('post.delete', $post->slug) }}" method="POST">
                                         @csrf
                                         <button onClick="javascript: return confirm('Please confirm deletion');" class="btn btn-danger btn-sm" href="">
                                             <i class="fas fa-trash">
@@ -100,7 +106,8 @@
                 </tbody>
             </table>
         </div>
-    <!-- /.card-body -->
+        <!-- /.card-body -->
     </div>
+    <a class="btn btn-primary" href="{{ route('post.create') }}">New Post</a>
 </section>
 @endsection

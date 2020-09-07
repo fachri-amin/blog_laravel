@@ -38,26 +38,28 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('post') }}" class="nav-link">
+                <a href="{{ route('post.admin') }}" class="nav-link">
                   <i class="far fa-newspaper nav-icon"></i>
                   <p>Posts</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ route('category') }}" class="nav-link">
-                  <i class="fas fa-sitemap nav-icon"></i>
-                  <p>Categories</p>
-                </a>
-              </li>
+              @can('admin', Auth::user())
+                <li class="nav-item">
+                  <a href="{{ route('category') }}" class="nav-link">
+                    <i class="fas fa-sitemap nav-icon"></i>
+                    <p>Categories</p>
+                  </a>
+                </li>
+              @endcan
               <li class="nav-item">
                 <a href="{{ route('comment') }}" class="nav-link">
-                  <i class="fas fa-sitemap nav-icon"></i>
+                  <i class="fas fa-comments nav-icon"></i>
                   <p>Comments</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('rating') }}" class="nav-link">
-                  <i class="fas fa-sitemap nav-icon"></i>
+                  <i class="fas fa-star nav-icon"></i>
                   <p>Ratings</p>
                 </a>
               </li>
@@ -93,7 +95,15 @@
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <a href="pages/users/logout.php" class="btn btn-primary">Yes</a>
+          <a class="btn btn-primary" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+              {{ __('Logout') }}
+          </a>
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+          </form>
         </div>
       </div>
       <!-- /.modal-content -->

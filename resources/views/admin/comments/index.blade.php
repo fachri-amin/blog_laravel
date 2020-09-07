@@ -57,43 +57,45 @@
                 </thead>
                 <tbody>
                 @foreach($comments as $comment)
-                    <tr>
-                        <td>
-                            {{ $comment->id }}
-                        </td>
-                        <td>
-                            <a>
-                                {{ $comment->comment }}
-                            </a>
-                            <br/>
-                            <small>
-                                {{ $comment->created_at }}
-                            </small>
-                        </td>
-                        <td>
-                            {{ $comment->user->username }}
-                        </td>
-                        <td>
-                            {{ $comment->post->title }}
-                        </td>
-                        <td class="project-actions text-left">
-                        <a class="btn btn-info btn-sm d-inline-block" href="{{ route('comment.edit', $comment->id) }}">
-                                <i class="fas fa-pencil-alt">
-                                </i>
-                                Edit
-                            </a>
-                            <div class="d-inline-block">
-                                <form action="{{ route('comment.delete', $comment->id) }}" method="POST">
-                                    @csrf
-                                    <button onClick="javascript: return confirm('Please confirm deletion');" class="btn btn-danger btn-sm" href="">
-                                        <i class="fas fa-trash">
-                                        </i>
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+                    @can('commentOwner', $comment)
+                        <tr>
+                            <td>
+                                {{ $comment->id }}
+                            </td>
+                            <td>
+                                <a>
+                                    {{ $comment->comment }}
+                                </a>
+                                <br/>
+                                <small>
+                                    {{ $comment->created_at }}
+                                </small>
+                            </td>
+                            <td>
+                                {{ $comment->user->username }}
+                            </td>
+                            <td>
+                                <a href="{{ route('post.detail', $comment->post->slug) }}">{{ $comment->post->title }} - {{ $comment->post->author->name }}</a>
+                            </td>
+                            <td class="project-actions text-left">
+                            <a class="btn btn-info btn-sm d-inline-block" href="{{ route('comment.edit', $comment->id) }}">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                    Edit
+                                </a>
+                                <div class="d-inline-block">
+                                    <form action="{{ route('comment.delete', $comment->id) }}" method="POST">
+                                        @csrf
+                                        <button onClick="javascript: return confirm('Please confirm deletion');" class="btn btn-danger btn-sm" href="">
+                                            <i class="fas fa-trash">
+                                            </i>
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endcan
                 @endforeach
                 </tbody>
             </table>

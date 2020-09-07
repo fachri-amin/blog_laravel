@@ -1,66 +1,92 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="container"  >
-        <h1 class="mb-4">All Post</h1>
-        <hr>
-        <div class="row">
-            <div class="col-md-8">
-                @foreach ($posts as $post)
-                    <div class="card mb-5">
-                        <img style="height: 400px; object-fit: cover; object-position: center;" src="{{ asset($post->showThumbnail()) }}" alt="">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <h3><a class="text-dark" href="post/{{ $post->slug }}">{{ $post->title }}</a></h3>
-                                <p class="text-muted d-inline"> By: {{ $post->author->name }}</p> &minus; <a href="/category/{{ $post->category->slug }}" class="text-muted d-inline">{{ $post->category->name }}</a>
-                            </div>
-                            <div class="card-text">
-                                <p>{{ Str::limit($post->body, 300) }}</p>
-                            </div>
-                            <a href="post/{{ $post->slug }}">Read more</a>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <div class="p-0">
-                                <p class="text-muted">Published on {{ $post->created_at->diffForHumans() }}</p>
-                                <p class="text-muted mb-0">Ratings : {{ $post->getRatingPost() }}</p>
-                            </div>
-                            @can('update', $post)
-                                <div>
-                                    <a href="/post/edit/{{ $post->slug }}" class="btn btn-warning">Edit</a>
-                                    <form class="d-inline" action="/post/delete/{{ $post->slug }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" onclick="return confirm('Ingin mengapus postingan ini?')" href="" class="btn btn-danger">Delete</button>
-                                    </form>    
-                                </div>
-                            @endcan
-                        </div>
-                    </div>
-                @endforeach
-                {{ $posts->links() }}
-            </div>
-            <div class="col-md-4">
-                @auth
-                    <a href="/post/create" class="btn btn-primary">New post</a>
-                @endauth
-                <div class="list-group mt-3">
-                    <h4 class="my-2">Categories:</h4>
-                    @isset($category)
-                        @foreach ($all_category as $category_link)
-                            <a href="/category/{{ $category_link->slug }}" class="list-group-item list-group-item-action{{ $category_link->name == $category->name ? ' active' : '' }}">
-                                {{ $category_link->name }}
-                            </a>
-                        @endforeach
-                    @else
-                        @foreach ($all_category as $category_link)
-                            <a href="/category/{{ $category_link->slug }}" class="list-group-item list-group-item-action">
-                                {{ $category_link->name }}
-                            </a>
-                        @endforeach                        
-                    @endisset
-                </div>
-            </div>
-        </div>
-    </div>
+    
+  <!-- Page Content -->
+  <div class="container">
 
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4">Blog Laravel</h1>
+        <hr>
+        @foreach ($posts as $post)
+          <!-- Blog Post -->
+          <div class="card mb-4">
+            @if ($post->thumbnail)
+              <img height=300 width=730 style="object-fit: cover; object-position: center;" src="{{ asset($post->showThumbnail()) }}" alt="">  
+            @else
+              <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">  
+            @endif
+            <div class="card-body">
+              <h2 class="card-title">{{ $post->title }}</h2>
+              <p class="text-muted">{{ $post->category->name }}</p>
+              <p class="card-text">{{ Str::limit($post->body, 300) }}</p>
+              <a href="post/{{ $post->slug }}" class="btn btn-primary">Read More &rarr;</a>
+            </div>
+            <div class="card-footer text-muted">
+              Posted {{ $post->created_at->diffForHumans() }} by
+              <a>{{ $post->author->name }}</a>
+            </div>
+          </div>
+
+        @endforeach
+
+        <!-- Pagination -->
+        {{-- <ul class="pagination justify-content-center mb-4">
+          <li class="page-item">
+            <a class="page-link" href="#">&larr; Older</a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Newer &rarr;</a>
+          </li>
+        </ul> --}}
+        {{ $posts->links() }}
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-append">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Categories</h5>
+          <div class="card-body">
+            @isset($category)
+              @foreach ($all_category as $category_link)
+                  <a href="/category/{{ $category_link->slug }}" class="list-group-item list-group-item-action{{ $category_link->name == $category->name ? ' active' : '' }}">
+                      {{ $category_link->name }}
+                  </a>
+              @endforeach
+            @else
+                @foreach ($all_category as $category_link)
+                    <a href="/category/{{ $category_link->slug }}" class="list-group-item list-group-item-action">
+                        {{ $category_link->name }}
+                    </a>
+                @endforeach                        
+            @endisset
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
 @endsection

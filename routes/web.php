@@ -5,12 +5,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-// //USER
-// Route::get('login', 'UserController@login')->name('login'); // parameter pertama adalah route nya parameter kedua controller
-// Route::get('register', 'UserController@register'); // parameter pertama adalah route nya parameter kedua controller
-
-
+//POST-AUTH
 Route::prefix('post')->middleware('auth')->group(function(){
+    //admin
+    Route::get('admin', 'PostController@indexAdmin')->name('post.admin');
     //create
     Route::get('create', 'PostController@create')->name('post.create');
     Route::post('save', 'PostController@savePost')->name('post.save');
@@ -27,7 +25,7 @@ Route::get('/post', 'PostController@index')->name('post');
 Route::get('post/{slug}', 'PostController@show')->name('post.detail'); //contoh menggunakan wildcard routing
 Route::get('showUsingModelBinding/{post:slug}', 'PostController@showUsingModelBinding'); //contoh menggunakan wildcard routing dengan model binding
 
-
+//CATEGORY-AUTH
 Route::prefix('category')->middleware('auth')->group(function(){
     //create
     Route::get('create', 'CategoryController@create')->name('category.create');
@@ -47,6 +45,7 @@ Route::get('category/{category:slug}', 'CategoryController@showPostPerCategory')
 //Comment
 Route::prefix('comment')->middleware('auth')->group(function(){
     Route::get('', 'CommentController@index')->name('comment');
+    Route::post('save/{post}', 'CommentController@saveComment')->name('comment.saveComment');
     Route::get('edit/{comment}', 'CommentController@edit')->name('comment.edit');
     Route::post('editComment/{comment}', 'CommentController@editComment')->name('comment.editComment');
     Route::post('delete/{comment}', 'CommentController@deleteRating')->name('comment.delete');
@@ -55,13 +54,14 @@ Route::prefix('comment')->middleware('auth')->group(function(){
 //Rating
 Route::prefix('rating')->middleware('auth')->group(function(){
     Route::get('', 'RatingController@index')->name('rating');
+    Route::post('save/{post}', 'RatingController@saveRating')->name('rating.saveRating');
     Route::get('edit/{rating}', 'RatingController@edit')->name('rating.edit');
     Route::post('editRating/{rating}', 'RatingController@editRating')->name('rating.editRating');
     Route::post('delete/{rating}', 'RatingController@deleteRating')->name('rating.delete');
 });
 
 //Admin
-Route::get('admin')->middleware('auth')->name('admin');
+Route::get('admin', 'AdminController@index')->middleware('auth')->name('admin');
 
 Route::get('/', 'HomeController@index')->name('home');
 

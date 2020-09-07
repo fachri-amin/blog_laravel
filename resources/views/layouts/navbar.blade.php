@@ -9,29 +9,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('post') }}">Post</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('category') }}">Category</a>
-                </li>
-
                 @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
+                <li class="nav-item">
+                    <a href="{{route('admin')}}" class="nav-link">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-
+                        
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Hi, {{ Auth::user()->name }}</a>
-                    </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Hi, {{ Auth::user()->name }}</a>
+                </li>
                 @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    </li> 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>    

@@ -6,6 +6,7 @@ use \App\Post; // ini agar class post bisa di gunakan, dengan memanggil namesapc
 use \Illuminate\Http\Request;
 use \App\Http\Requests\RequestPost;
 use \App\Category;
+use App\Comment;
 
 class PostController extends Controller
 {
@@ -16,10 +17,20 @@ class PostController extends Controller
         return view('posts.index', compact('posts', 'all_category'));
     }
 
+
+    public function indexAdmin(){
+        $posts = Post::latest()->paginate(5);
+        return view('admin.posts.index', compact('posts'));
+    }
+
     public function show($slug){ //samakan nama parameter yang mengisi method ini dengan wildcard yang ada di routing
         $post = Post::where('slug', $slug)->firstOrFail();// firstOrFail ini digunakan agar apabila data yang di cari tidak ada maka akan redirect ke 404 page
 
-        return view('posts.show', compact('slug', 'post'));
+        $comments = Comment::where('post_id', $post->id)->latest()->get();
+
+        $all_category = Category::all();
+
+        return view('posts.show', compact('slug', 'post', 'all_category', 'comments'));
     }
 
     public function showUsingModelBinding(Post $post){
@@ -28,7 +39,7 @@ class PostController extends Controller
 
     public function create(){
         $categories = Category::all();
-        return view('posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories'));
     }
 
     public function savePost(RequestPost $request){
@@ -58,7 +69,7 @@ class PostController extends Controller
         $this->authorize('update', $post);
 
         $categories = Category::all();
-        return view('posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     public function editPost(RequestPost $request, Post $post){

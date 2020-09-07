@@ -26,4 +26,18 @@ class PostPolicy
     public function delete(User $user, Post $post){
         return $user->id === $post->user_id;
     }
+
+    public function canRate(User $user, Post $post){
+
+        $rated = true;
+
+        foreach($post->ratings()->get() as $rate){
+            if($rate->user_id === $user->id){
+                $rated = false;
+                break;
+            }
+            
+        }
+        return $rated;
+    }
 }

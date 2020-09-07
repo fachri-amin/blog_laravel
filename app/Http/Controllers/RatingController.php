@@ -14,6 +14,18 @@ class RatingController extends Controller
         return view('admin.ratings.index', compact('ratings'));
     }
 
+    public function saveRating(RequestRating $request, Post $post){
+
+        //membuat validasi
+        $attr = $request->all();
+        $attr['post_id'] = $post->id;
+        $comments = auth()->user()->ratings()->create($attr);
+
+        session()->flash('success', 'You post a new comment to this page');
+        
+        return redirect($to = route('post.detail', $post->slug));
+    }
+
     public function edit(Rating $rating){
         return view('admin.ratings.edit', compact('rating'));
     }
