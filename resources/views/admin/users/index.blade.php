@@ -76,13 +76,8 @@
                                 {{ $user->email }}
                             </td>
                             <td class="project-actions text-left">
-                            <a class="btn btn-info btn-sm d-inline-block" href="{{-- {{ route('post.edit', $post->slug) }}--}}">
-                                    <i class="fas fa-pencil-alt">
-                                    </i>
-                                    Edit
-                                </a>
                                 <div class="d-inline-block">
-                                    <form action="{{-- {{ route('post.delete', $post->slug) }} --}}" method="POST">
+                                    <form action="{{ route('user.delete', $user->id) }}" method="POST">
                                         @csrf
                                         <button onClick="javascript: return confirm('Please confirm deletion');" class="btn btn-danger btn-sm" href="">
                                             <i class="fas fa-trash">

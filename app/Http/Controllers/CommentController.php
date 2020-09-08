@@ -14,8 +14,7 @@ class CommentController extends Controller
         return view('admin.comments.index', compact('comments'));
     }
 
-    public function saveComment(RequestComment $request, Post $post){
-
+    public function store(RequestComment $request, Post $post){
         //membuat validasi
         $attr = $request->all();
         $attr['post_id'] = $post->id;
@@ -30,8 +29,8 @@ class CommentController extends Controller
         return view('admin.comments.edit', compact('comment'));
     }
 
-    public function editComment(RequestComment $request, Comment $comment){
-
+    public function update(RequestComment $request, Comment $comment){
+        $this->authorize('commentOwner', $comment);
         $attr = $request->all(); 
         $comment->update($attr);
 
@@ -40,7 +39,9 @@ class CommentController extends Controller
         return redirect($to = route('comment'));
     }
 
-    public function deleteRating(Comment $comment){
+    public function destroy(Comment $comment){
+        $this->authorize('commentOwner', $comment);
+        
         $comment->delete();
 
         session()->flash('success', 'The Rating was delete');

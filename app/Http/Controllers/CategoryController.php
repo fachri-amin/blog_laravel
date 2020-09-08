@@ -23,7 +23,7 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
-    public function saveCategory(RequestCategory $request){
+    public function store(RequestCategory $request){
 
         //membuat validasi
         $attr = $request->all();
@@ -42,7 +42,7 @@ class CategoryController extends Controller
         return view('admin.categories.edit', compact('category'));
     }
 
-    public function editCategory(RequestCategory $request, Category $category){
+    public function update(RequestCategory $request, Category $category){
 
         $attr = $request->all(); 
         
@@ -55,7 +55,7 @@ class CategoryController extends Controller
         return redirect($to = route('category'));
     }
 
-    public function deleteCategory(Category $category){
+    public function destroy(Category $category){
         $category->delete();
 
         session()->flash('success', 'The Category was delete');

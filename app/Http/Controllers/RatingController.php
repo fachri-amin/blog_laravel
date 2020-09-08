@@ -14,8 +14,7 @@ class RatingController extends Controller
         return view('admin.ratings.index', compact('ratings'));
     }
 
-    public function saveRating(RequestRating $request, Post $post){
-
+    public function store(RequestRating $request, Post $post){
         //membuat validasi
         $attr = $request->all();
         $attr['post_id'] = $post->id;
@@ -30,8 +29,8 @@ class RatingController extends Controller
         return view('admin.ratings.edit', compact('rating'));
     }
 
-    public function editRating(RequestRating $request, Rating $rating){
-
+    public function update(RequestRating $request, Rating $rating){
+        $this->authorize('ratingOwner', $rating);
         $attr = $request->all(); 
         $rating->update($attr);
 
@@ -40,7 +39,10 @@ class RatingController extends Controller
         return redirect($to = route('rating'));
     }
 
-    public function deleteRating(Rating $rating){
+    public function destroy(Rating $rating){
+
+        $this->authorize('ratingOwner', $rating);
+
         $rating->delete();
 
         session()->flash('success', 'The Rating was delete');

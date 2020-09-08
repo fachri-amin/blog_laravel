@@ -33,16 +33,12 @@ class PostController extends Controller
         return view('posts.show', compact('slug', 'post', 'all_category', 'comments'));
     }
 
-    public function showUsingModelBinding(Post $post){
-        return view('posts.show', compact('post'));
-    }
-
     public function create(){
         $categories = Category::all();
         return view('admin.posts.create', compact('categories'));
     }
 
-    public function savePost(RequestPost $request){
+    public function store(RequestPost $request){
 
         //membuat validasi
         $attr = $request->all();
@@ -72,7 +68,7 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('post', 'categories'));
     }
 
-    public function editPost(RequestPost $request, Post $post){
+    public function update(RequestPost $request, Post $post){
 
         //authorization
         $this->authorize('update', $post);
@@ -80,12 +76,6 @@ class PostController extends Controller
         $request->validate([
             'thumbnail'=>'image|mimes:jpeg,jpg,png|max:2048',
         ]);
-        
-        //membuat validasi
-        // $attr = request()->validate([
-            //     'title'=>'required|min:5', // membuat field title menjadi required dan minimal 5 character
-            //     'body'=>'required'
-            // ]); //! ini dibuat dengan manual tanpa php artisan make:request
             
         if(request()->file('thumbnail')){ //kalau thumbnail diganti maka thumbnail lama dihapus
             \Storage::delete($post->thumbnail);
@@ -107,7 +97,7 @@ class PostController extends Controller
         return redirect($to = route('post'));
     }
 
-    public function deletePost(Post $post){
+    public function destroy(Post $post){
 
         $this->authorize('delete', $post);
 
