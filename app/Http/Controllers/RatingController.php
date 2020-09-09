@@ -14,6 +14,13 @@ class RatingController extends Controller
         return view('admin.ratings.index', compact('ratings'));
     }
 
+    // public function searchAdmin(){
+    //     $query = request('query');
+
+    //     $rating = Rating::post()->where("comment", "like", "%$query%")->latest()->paginate(5);
+    //     return view('admin.comments.index', compact('comments'));
+    // }
+
     public function store(RequestRating $request, Post $post){
         //membuat validasi
         $attr = $request->all();

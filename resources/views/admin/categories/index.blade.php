@@ -8,8 +8,8 @@
         <h1>Category Management</h1>
         </div>
         <div class="col-sm-6">
-        <form class="form-inline float-right" action="" method="get">
-            <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search here" aria-label="Search">
+        <form class="form-inline float-right" action="{{ route('category.search') }}" method="get">
+            <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search here" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         </div>

@@ -20,6 +20,12 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function search(){
+        $query = request('query');
+
+        $users = User::where("username", "like", "%$query%")->latest()->paginate(5);
+        return view('admin.users.index', compact('users'));
+    }
     /**
      * Show the form for creating a new resource.
      *

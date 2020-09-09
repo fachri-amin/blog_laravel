@@ -23,7 +23,7 @@
             <div class="card-body">
               <h2 class="card-title">{{ $post->title }}</h2>
               <p class="text-muted">{{ $post->category->name }}</p>
-              <p class="card-text">{{ Str::limit($post->body, 300) }}</p>
+              <p class="card-text">{{ strip_tags(Str::limit($post->body, 300)) }}</p>
               <a href="post/{{ $post->slug }}" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">
@@ -54,12 +54,14 @@
         <div class="card my-4">
           <h5 class="card-header">Search</h5>
           <div class="card-body">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-append">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
-            </div>
+            <form action="{{ route('post.search') }}" method="GET">
+              <div class="input-group">
+                <input type="text" class="form-control" name="query" placeholder="Search for...">
+                <span class="input-group-append">
+                  <button class="btn btn-secondary" type="submit">Go!</button>
+                </span>
+              </div>
+            </form>
           </div>
         </div>
 

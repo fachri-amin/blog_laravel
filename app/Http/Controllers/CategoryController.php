@@ -13,6 +13,13 @@ class CategoryController extends Controller
         return view('admin.categories.index', compact('categories'));
     }
 
+    public function search(){
+        $query = request('query');
+
+        $categories = Category::where("name", "like", "%$query%")->latest()->paginate(5);
+        return view('admin.categories.index', compact('categories'));
+    }
+
     public function showPostPerCategory(Category $category){
         $posts = $category->posts()->latest()->paginate(5);
         $all_category = Category::all();

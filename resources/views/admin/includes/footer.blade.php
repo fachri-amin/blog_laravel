@@ -33,29 +33,11 @@
 
 <!-- PAGE SCRIPTS -->
 <script src="{{ asset('template/AdminLTE/dist/js/pages/dashboard2.js') }}"></script>
-{{-- <!-- <script src="<?= BASE_URL ?>node_modules/summernote/dist/summernote-bs4.min.js"></script> --> --}}
 
 <!-- summernote -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <!-- my script -->
-<script>
-    $(document).ready(function() {
-      $('#summernote').summernote({
-        placeholder: 'Create your post',
-        tabsize: 2,
-        height: 500,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ]
-      });
-    });
-  </script>
+@yield('script')
 </body>
 </html>

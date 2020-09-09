@@ -9,8 +9,8 @@
         <h1>Post Management</h1>
         </div>
         <div class="col-sm-6">
-        <form class="form-inline float-right" action="" method="get">
-            <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search here" aria-label="Search">
+        <form class="form-inline float-right" action="{{ route('post.searchAdmin') }}" method="get">
+            <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search here" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         </div>
@@ -91,6 +91,7 @@
                                 </a>
                                 <div class="d-inline-block">
                                     <form action="{{ route('post.delete', $post->slug) }}" method="POST">
+                                        @method('delete')
                                         @csrf
                                         <button onClick="javascript: return confirm('Please confirm deletion');" class="btn btn-danger btn-sm" href="">
                                             <i class="fas fa-trash">

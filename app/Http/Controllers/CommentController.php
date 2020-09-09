@@ -14,6 +14,13 @@ class CommentController extends Controller
         return view('admin.comments.index', compact('comments'));
     }
 
+    public function search(){
+        $query = request('query');
+
+        $comments = Comment::where("comment", "like", "%$query%")->latest()->paginate(5);
+        return view('admin.comments.index', compact('comments'));
+    }
+
     public function store(RequestComment $request, Post $post){
         //membuat validasi
         $attr = $request->all();

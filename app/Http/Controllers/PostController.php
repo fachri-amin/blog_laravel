@@ -17,6 +17,20 @@ class PostController extends Controller
         return view('posts.index', compact('posts', 'all_category'));
     }
 
+    public function search(){
+        $query = request('query');
+
+        $posts = Post::where("title", "like", "%$query%")->latest()->paginate(5);
+        $all_category = Category::all();
+        return view('posts.index', compact('posts', 'all_category'));
+    }
+
+    public function searchAdmin(){
+        $query = request('query');
+
+        $posts = Post::where("title", "like", "%$query%")->latest()->paginate(5);
+        return view('admin.posts.index', compact('posts'));
+    }
 
     public function indexAdmin(){
         $posts = Post::latest()->paginate(5);
