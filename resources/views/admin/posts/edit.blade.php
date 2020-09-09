@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label for="body">Example textarea</label>
-                            <textarea name="body" class="form-control" id="body" rows="3">{{ old('body') ?? $post->body }}</textarea>
+                            <textarea id="my-editor" class="form-control" name="body" rows="10">{{ old('body') ?? $post->body }}</textarea>
                             @error('body')
                                 <div class="text-danger">
                                     {{ $message }}
@@ -81,4 +81,19 @@
         </div>
     </section>
 <!-- /.content -->
+@endsection
+
+@section('script')
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script>
+        let options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+    </script>
+    <script>
+        CKEDITOR.replace('my-editor', options);
+    </script>
 @endsection
